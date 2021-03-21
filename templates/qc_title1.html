@@ -25,19 +25,19 @@
     </thead>
     <tbody>
     {% for list in file_data %}
-        <tr id="ReferenceID_{{ list.1 }}">
+        <tr id="refid-{{ list.1 }}">
             <td>
                 <button type="button" class="btn btn-primary use-address2 editbuttton" data-id="9"
                         data-toggle="modal" data-target="#myModal">Edit
                 </button>
             </td>
-            <td class="ReferenceID">{{ list.1 }}</td>
-            <td class="Marketplace">{{ list.2 }}</td>
-            <td class="Customer_id">{{ list.3 }}</td>
-            <td class="Review_id">{{ list.4 }}</td>
-            <td class="Product_id">{{ list.5 }}</td>
-            <td class="Product_parent">{{ list.6 }}</td>
-            <td class="Product_title">{{ list.7 }}</td>
+            <td class="ReferenceID userData" name="Referenceidname">{{ list.1 }}</td>
+            <td class="Marketplace userData" name="marketplacename">{{ list.2 }}</td>
+            <td class="Customer_id userData" name="customeridname">{{ list.3 }}</td>
+            <td class="Review_id userData" name="reviewidname">{{ list.4 }}</td>
+            <td class="Product_id userData" name="productidname">{{ list.5 }}</td>
+            <td class="Product_parent userData" name="productparentname">{{ list.6 }}</td>
+            <td class="Product_title userData" name="producttitlename">{{ list.7 }}</td>
         </tr>
 
     {% endfor %}
@@ -119,8 +119,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src=" https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
@@ -170,14 +168,14 @@
         var product_title_id = $('#product_title_id').val();
         var tabelname = $('#tabelname').val();
         {#$('.close').trigger('click');#}
-        console.log(Referenceid);
-        console.log(marketplace_id);
-        console.log(customer_id);
-        console.log(review_id);
-        console.log(product_id);
-        console.log(product_parent_id);
-        console.log(product_title_id);
-        console.log(tabelname);
+        {#console.log(Referenceid);#}
+        {#console.log(marketplace_id);#}
+        {#console.log(customer_id);#}
+        {#console.log(review_id);#}
+        {#console.log(product_id);#}
+        {#console.log(product_parent_id);#}
+        {#console.log(product_title_id);#}
+        {#console.log(tabelname);#}
 
 
         $.ajax({
@@ -190,18 +188,21 @@
                 review_id: review_id,
                 product_id: product_id,
                 product_parent_id: product_parent_id,
-                product_title_id:product_title_id,
-                tabelname:tabelname
+                product_title_id: product_title_id,
+                tabelname: tabelname
 
             },
 
             success: function (data, success) {
-                var ref='#ReferenceID_'+Referenceid.toString();
+                if (data.file_data) {
+                    updateTabel(data.file_data);
+                }
+                {#var ref = '#refid-' + Referenceid.toString();#}
                 {#$('#ReferenceID_'+Referenceid.toString()).closest('tr').find('td .Marketplace').text(marketplace_id);#}
                 {#$(ref+'> .Marketplace').val(marketplace_id);#}
-                $(ref+'> .Marketplace').text(marketplace_id);
-
-                $('.close').trigger('click');
+                {#$(ref + '> .Marketplace').text(marketplace_id);#}
+                {#$('.close').trigger('click');#}
+                $('#myModal').modal('hide');
                 alert("sucess")
 
             },
@@ -214,5 +215,29 @@
 
     });
 
+</script>
+<script>
+    function updateTabel(filedata) {
+        {#alert(user.ReferenceID);#}
+        var ref = filedata.ReferenceID.toString();
+        {#alert(ref);#}
+        $("#example #refid-" + ref).children(".userData").each(function () {
+            var attr = $(this).attr("name");
+            if (attr == "marketplacename") {
+                $(this).replaceWith(filedata.Marketplace)
+                {#$(this).text(filedata.Marketplace);#}
+            } else if (attr == "customeridname") {
+                $(this).text(filedata.Customer_id);
+            } else if (attr == "reviewidname") {
+                $(this).text(filedata.Review_id);
+            } else if (attr == "productidname") {
+                $(this).text(filedata.Product_id);
+            } else if (attr == "productparentname") {
+                $(this).text(filedata.Product_parent);
+            } else if (attr == "producttitlename") {
+                $(this).text(filedata.Product_title);
+            }
+        });
+    }
 </script>
 </html>

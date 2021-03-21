@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.conf import settings
 import sqlalchemy
 from django.db import connection
+from django.http import JsonResponse
+import json
 
 
 def db_connection():
@@ -49,6 +51,12 @@ def qc_title(request):
             cursor.execute("select * from {}".format(tableName))
             # print('-------->query=', connection.queries)
             file_data = cursor.fetchall()
+        # json_data = []
+        # for obj in file_data:
+        #     json_data.append({"ReferenceID": obj[1], "Marketplace": obj[2], "Customer_id": obj[3], "Review_id": obj[4],
+        #                       "Product_id": obj[5], "Product_parent": obj[6], "Product_title": obj[7]})
+        #     # return JsonResponse(json_data, safe=False)
+        # print(json_data)
         return render(request, 'qc_title1.html', {'file_data': file_data, 'tableName': tableName})
     else:
         return render(request, 'qc_title.html')
@@ -59,6 +67,10 @@ def qc_title_update(request):
         tableName = request.GET.get('tabelname')
         Referenceid = request.GET.get('Referenceid')
         marketplace_id = request.GET.get('marketplace_id')
+        customer_id = request.GET.get('customer_id')
+        product_id = request.GET.get('product_id')
+        review_id = request.GET.get('review_id')
+        product_parent_id = request.GET.get('product_parent_id')
         product_title_id = request.GET.get('product_title_id')
         product_title = str(product_title_id).replace("'", "\\'")
         # print(tableName, product_title)
@@ -66,4 +78,12 @@ def qc_title_update(request):
             cursor.execute(
                 f"update {tableName} set product_title='{product_title}',marketplace='{marketplace_id}' where id={Referenceid}")
             # print('-------->query=', connection.queries)
-        return HttpResponse('updated')
+            # return JsonResponse(json_data, safe=False)
+        file_data = {'ReferenceID': Referenceid, 'Marketplace': marketplace_id, 'Customer_id': customer_id,
+                     'Review_id': review_id, 'Product_id': product_id, "Product_parent": product_parent_id,
+                     "Product_title": product_title_id}
+        data = {
+            'file_data': file_data
+        }
+        print(data)
+        return JsonResponse(data)
