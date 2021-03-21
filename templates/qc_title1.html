@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+</head>
+<body>
+<table id="example" class="display nowrap" style="width:100%">
+    <thead>
+    <tr>
+        <th>action</th>
+        <th>ReferenceID</th>
+        <th>marketplace</th>
+        <th>customer id</th>
+        <th>review id</th>
+        <th>product id</th>
+        <th>product_parent</th>
+        <th>product title</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for list in file_data %}
+        <tr id="ReferenceID_{{ list.1 }}">
+            <td>
+                <button type="button" class="btn btn-primary use-address2 editbuttton" data-id="9"
+                        data-toggle="modal" data-target="#myModal">Edit
+                </button>
+            </td>
+            <td class="ReferenceID">{{ list.1 }}</td>
+            <td class="Marketplace">{{ list.2 }}</td>
+            <td class="Customer_id">{{ list.3 }}</td>
+            <td class="Review_id">{{ list.4 }}</td>
+            <td class="Product_id">{{ list.5 }}</td>
+            <td class="Product_parent">{{ list.6 }}</td>
+            <td class="Product_title">{{ list.7 }}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal 2 -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        Modal content
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" name="tabelname" id="tabelname" value="{{ tableName }}">
+                    <label class="col-xs-3 control-label">Reference</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="examDate1" class="form-control"
+                               id="Referenceid" readonly/>
+                    </div>
+                    <label class="col-xs-3 control-label">Marketplace</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="marketplace_id" class="form-control"
+                               id="marketplace_id">
+                    </div>
+                    <label class="col-xs-3 control-label">Customer</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="customer_id" class="form-control"
+                               id="customer_id">
+                    </div>
+                    <label class="col-xs-3 control-label">Review</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="review_id" class="form-control"
+                               id="review_id">
+                    </div>
+                    <label class="col-xs-3 control-label">Product id</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="product_id" class="form-control"
+                               id="product_id">
+                    </div>
+                    <label class="col-xs-3 control-label">Product Parent</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="product_parent_id" class="form-control"
+                               id="product_parent_id">
+                    </div>
+                    <label class="col-xs-3 control-label">Product Title</label>
+                    <div class="col-xs-5 ">
+                        <input type='text' name="product_title_id" class="form-control"
+                               id="product_title_id">
+                    </div>
+                </div>
+
+                <div align="center">
+                    <button type="submit" class="btn btn-primary updatemodul"
+                    >Update
+                    </button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal" id="modalReset">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Trigger the modal with a button -->
+</body>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src=" https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+<script>
+    $(document).on("click", ".editbuttton", function () {
+        var RecordId = $(this).closest("tr").find(".ReferenceID").text();
+        var marketplace_id = $(this).closest("tr").find(".Marketplace").text();
+        var customer_id = $(this).closest("tr").find(".Customer_id").text();
+        var review_id = $(this).closest("tr").find(".Review_id").text();
+        var product_id = $(this).closest("tr").find(".Product_id").text();
+        var product_parent = $(this).closest("tr").find(".Product_parent").text();
+        var product_title = $(this).closest("tr").find(".Product_title").text();
+        $("#myModal #Referenceid").val(RecordId);
+        $("#myModal #marketplace_id").val(marketplace_id);
+        $("#myModal #customer_id").val(customer_id);
+        $("#myModal #review_id").val(review_id);
+        $("#myModal #product_id").val(product_id);
+        $("#myModal #product_parent_id").val(product_parent);
+        $("#myModal #product_title_id").val(product_title);
+
+    });
+</script>
+<script>
+    $(".updatemodul").click(function () {
+
+        var Referenceid = $('#Referenceid').val();
+        var marketplace_id = $('#marketplace_id').val();
+        var customer_id = $('#customer_id').val();
+        var review_id = $('#review_id').val();
+        var product_id = $('#product_id').val();
+        var product_parent_id = $('#product_parent_id').val();
+        var product_title_id = $('#product_title_id').val();
+        var tabelname = $('#tabelname').val();
+        {#$('.close').trigger('click');#}
+        console.log(Referenceid);
+        console.log(marketplace_id);
+        console.log(customer_id);
+        console.log(review_id);
+        console.log(product_id);
+        console.log(product_parent_id);
+        console.log(product_title_id);
+        console.log(tabelname);
+
+
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'qc_title_update' %}',
+            data: {
+                Referenceid: Referenceid,
+                marketplace_id: marketplace_id,
+                customer_id: customer_id,
+                review_id: review_id,
+                product_id: product_id,
+                product_parent_id: product_parent_id,
+                product_title_id:product_title_id,
+                tabelname:tabelname
+
+            },
+
+            success: function (data, success) {
+                var ref='#ReferenceID_'+Referenceid.toString();
+                {#$('#ReferenceID_'+Referenceid.toString()).closest('tr').find('td .Marketplace').text(marketplace_id);#}
+                {#$(ref+'> .Marketplace').val(marketplace_id);#}
+                $(ref+'> .Marketplace').text(marketplace_id);
+
+                $('.close').trigger('click');
+                alert("sucess")
+
+            },
+            error: function (data, error) {
+                alert("error")
+
+            }
+
+        });
+
+    });
+
+</script>
+</html>

@@ -1,0 +1,217 @@
+<div class="form-group">
+    <label class="col-xs-2 control-label">Month</label>
+    <div class="col-xs-3">
+
+        <s:select headerKey="" headerValue="--Select--"
+                  list="#{'1':'JAN', '2':'FEB', '3':'MAR','4':'APR','5':'MAY','6':'JUN','7':'JUL', '8':'AUG', '9':'SEP', '10':'OCT','11':'NOV', '12':'Dec'}"
+                  name="selctmonth" cssClass="form-control"/>
+    </div>
+    <label class="col-xs-1 control-label">Year</label>
+    <div class="col-xs-3">
+        <div class="input-group input-append date" id="yearPicker">
+            <s:textfield name="selctyear" cssClass="form-control"
+                         id="yearofExam"/>
+            <span class="input-group-addon add-on"><span
+                    class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+
+
+    </div>
+
+
+    <div class="col-xs-1">
+        <s:submit cssClass="btn btn-primary" value="Search"/>
+    </div>
+</div>
+
+
+</div>
+</s:form>
+<div id="row_dim">
+    <
+    <s:form id="downloadStudentMarksForm"
+            action="downloadStudentMarks" theme="css_xhtml"
+            cssClass="form-horizontal" autocomplete="off">
+
+        <div class="dataTable_wrapper">
+            <table class="table table-bordered display nowrap"
+                   id="dataTS">
+                <thead>
+                <tr>
+                    <th style="background: #00a8a8; color: white;"></th>
+                    <th style="background: #00a8a8; color: white;">Reference
+                        id
+                    </th>
+                    <th style="background: #00a8a8; color: white;">Employee
+                        name
+                    </th>
+                    <th style="background: #00a8a8; color: white;">Month</th>
+                    <th style="background: #00a8a8; color: white;">Year</th>
+                    <th style="background: #00a8a8; color: white;">Basics</th>
+                    <th style="background: #00a8a8; color: white;">Allowances</th>
+
+                    <th style="background: #00a8a8; color: white;">Edit</th>
+                    <th style="background: #00a8a8; color: white;">Submit</th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <s:iterator value="firsttime">
+                    <tr id="ReferenceID_2">
+                        <td></td>
+                        <td class="t ReferenceID">
+                            <s:property value="ReferenceID"/>
+                            2
+                        </td>
+                        <td class="stfnm">
+                            <s:property
+                                    value="ffff"/>
+                        </td>
+                        <td class="mnt">
+                            <div class="form-group">
+
+                                <div class="col-xs-2">
+                                    <s:select id="Name"
+                                              list="#{'1':'01', '2':'02', '3':'03','4':'04','5':'05','6':'06','7':'07', '8':'08', '9':'09', '10':'10','11':'11', '12':'12'}"
+                                              name="selctmonth" cssClass="form-control"/>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="yr">
+
+                            <h5 class="yearforpay"></h5>
+
+                        </td>
+                        <td class="bb"><input type="text" name="allowance"
+                                              class="form-control expenses" value="" size="6"/>
+                        </td>
+
+                        <td class="netsalary"><input
+                                class="form-control expenses_sum" size="6"></td>
+                        <td class="wday">
+                            <s:property value="TableID"/>
+                        </td>
+                        <td>Unpaid</td>
+                        <td>
+                            <button type="button" class="btn btn-primary use-address2 editbuttton" data-id="9"
+                                    data-toggle="modal" data-target="#myModal">Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-info use-address1">Submit
+                            </button>
+                        </td>
+                    </tr>
+                </s:iterator>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                Modal content
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    id="closeMark">&times;
+                            </button>
+
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Reference</label>
+                                <div class="col-xs-5 ">
+
+                                    <input type='text' name="examDate1" class="form-control"
+                                           id="Referenceid" readonly/>
+
+                                </div>
+                            </div>
+
+
+                            <div align="center">
+                                <button type="submit" class="btn btn-primary updatemodul"
+                                >Update
+                                </button>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal" id="modalReset">Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Trigger the modal with a button -->
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+
+$(document).on("click",".editbuttton",function(){
+	var RecordId = $(this).closest("tr").find(".ReferenceID").text();
+  $("#myModal #Referenceid").val(RecordId);
+
+
+});
+
+$(".updatemodul").click(function() {
+
+                var vlue= $('#Referenceid').val();
+                var $tableRow = $("td").filter(function() {
+                    return $(this).text() == vlue;
+                }).closest("tr");
+
+                $.ajax({
+                    type : 'POST',
+                    url : 'submitonebyonestaff',
+                    dataType : 'JSON',
+                    data : {
+                         allownce : $row.find(".allw").find("input").val(),
+                        Refid : $row.find(".t").text(),
+
+                    },
+
+                    success : function(data, success) {
+
+                      var ReferenceID = data.id ;
+                      var UpdateHtml = "<td>"+ReferenceID+"</td>you all td here";
+                      $("#dataTS").find("#ReferenceID_"+ReferenceID).empty().append(UpdateHtml);
+                      $('#myModal').modal('hide');
+                      alert("sucess")
+
+                    },
+                    error : function(data, error) {
+                        alert("error")
+
+                    }
+
+                });
+
+            });
+
+</script>
