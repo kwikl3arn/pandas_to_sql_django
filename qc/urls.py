@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.qc_title,name='qc_title'),
     path('qc_title_update',views.qc_title_update,name='qc_title_update'),
+    path('tabel_api/<str:tableName>',views.json_tabel,name='tabel_api'),
 ]
