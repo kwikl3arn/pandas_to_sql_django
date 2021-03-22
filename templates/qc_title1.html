@@ -24,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for list in file_data %}
+    <!-- {% for list in file_data %}
         <tr id="refid-{{ list.1 }}">
             <td>
                 <button type="button" class="btn btn-primary use-address2 editbuttton" data-id="9"
@@ -40,10 +40,10 @@
             <td class="Product_title userData" name="producttitlename">{{ list.7 }}</td>
         </tr>
 
-    {% endfor %}
+    {% endfor %} -->
     </tbody>
 </table>
-
+<input type="text" name="tabelname" id="tabelname" value={{tableName}} >
 <!-- Modal 2 -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -128,31 +128,53 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#example').DataTable({
-            dom: 'Bfrtip',
+    let tabelname=$('tabelname').val();
+
+        var table = $('#example').DataTable({
+            "processing": true,
+        "serverSide": true,
+            "ajax": {
+                "url": "tabel_api/{{tableName}}",
+                "type": "GET",
+                "dataSrc":"",
+                data:{'tableName':tabelname}
+            },
+            "columns": [
+            {
+                "data": null,
+                "defaultContent": '<button type="button" class="btn btn-primary use-address2 editbuttton" data-toggle="modal" data-target="#myModal">Edit</button>'
+            },
+                {"data": "ReferenceID"},
+                {"data": "Marketplace"},
+                {"data": "Customer_id"},
+                {"data": "Review_id"},
+                {"data": "Product_id"},
+                {"data": "Product_parent"},
+                {"data": "Product_title"},
+
+            ],
+            select: true,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         });
+        $(document).ready(function () {      
+            table
     });
 </script>
 <script>
     $(document).on("click", ".editbuttton", function () {
-        var RecordId = $(this).closest("tr").find(".ReferenceID").text();
-        var marketplace_id = $(this).closest("tr").find(".Marketplace").text();
-        var customer_id = $(this).closest("tr").find(".Customer_id").text();
-        var review_id = $(this).closest("tr").find(".Review_id").text();
-        var product_id = $(this).closest("tr").find(".Product_id").text();
-        var product_parent = $(this).closest("tr").find(".Product_parent").text();
-        var product_title = $(this).closest("tr").find(".Product_title").text();
-        $("#myModal #Referenceid").val(RecordId);
-        $("#myModal #marketplace_id").val(marketplace_id);
-        $("#myModal #customer_id").val(customer_id);
-        $("#myModal #review_id").val(review_id);
-        $("#myModal #product_id").val(product_id);
-        $("#myModal #product_parent_id").val(product_parent);
-        $("#myModal #product_title_id").val(product_title);
+        let data = table.row($(this).parents('tr')).data();
+        let class_name = $(this).attr('class');
+        console.log(data);
+
+        $("#myModal #Referenceid").val(data['ReferenceID']);
+        $("#myModal #marketplace_id").val(data['Marketplace']);
+        $("#myModal #customer_id").val(data['Customer_id']);
+        $("#myModal #review_id").val(data['Review_id']);
+        $("#myModal #product_id").val(data['Product_id']);
+        $("#myModal #product_parent_id").val(data['Product_parent']);
+        $("#myModal #product_title_id").val(data['Product_title']);
 
     });
 </script>
@@ -197,13 +219,8 @@
                 if (data.file_data) {
                     updateTabel(data.file_data);
                 }
-                {#var ref = '#refid-' + Referenceid.toString();#}
-                {#$('#ReferenceID_'+Referenceid.toString()).closest('tr').find('td .Marketplace').text(marketplace_id);#}
-                {#$(ref+'> .Marketplace').val(marketplace_id);#}
-                {#$(ref + '> .Marketplace').text(marketplace_id);#}
-                {#$('.close').trigger('click');#}
                 $('#myModal').modal('hide');
-                alert("sucess")
+                $('#example').DataTable().ajax.reload();//refresh api/json 
 
             },
             error: function (data, error) {
