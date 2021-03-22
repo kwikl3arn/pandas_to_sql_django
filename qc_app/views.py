@@ -7,7 +7,6 @@ from django.db import connection
 from django.http import JsonResponse
 import json
 
-
 def db_connection():
     user = settings.DATABASES['default']['USER']
     password = settings.DATABASES['default']['PASSWORD']
@@ -32,6 +31,18 @@ def pandas_tabelcreate(df, tableName):
     else:
         print(f"Table {tableName} created successfully.")
 
+def json_tabel(request,tableName):
+    print('tableName=',tableName)
+    with connection.cursor() as cursor:
+        cursor.execute("select * from {}".format(tableName))
+        # print('-------->query=', connection.queries)
+        file_data = cursor.fetchall()
+    json_data = []
+    for obj in file_data:
+        json_data.append({"ReferenceID": obj[1], "Marketplace": obj[2], "Customer_id": obj[3], "Review_id": obj[4],
+                        "Product_id": obj[5], "Product_parent": obj[6], "Product_title": obj[7]})
+    # print(json_data)                    
+    return JsonResponse(json_data, safe=False)                    
 
 # Create your views here.
 def qc_title(request):
@@ -51,12 +62,7 @@ def qc_title(request):
             cursor.execute("select * from {}".format(tableName))
             # print('-------->query=', connection.queries)
             file_data = cursor.fetchall()
-        # json_data = []
-        # for obj in file_data:
-        #     json_data.append({"ReferenceID": obj[1], "Marketplace": obj[2], "Customer_id": obj[3], "Review_id": obj[4],
-        #                       "Product_id": obj[5], "Product_parent": obj[6], "Product_title": obj[7]})
-        #     # return JsonResponse(json_data, safe=False)
-        # print(json_data)
+
         return render(request, 'qc_title1.html', {'file_data': file_data, 'tableName': tableName})
     else:
         return render(request, 'qc_title.html')
@@ -85,5 +91,5 @@ def qc_title_update(request):
         data = {
             'file_data': file_data
         }
-        print(data)
+        # print(data)
         return JsonResponse(data)
