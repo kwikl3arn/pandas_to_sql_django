@@ -43,7 +43,7 @@
     {% endfor %} -->
     </tbody>
 </table>
-<input type="text" name="tabelname" id="tabelname" value={{tableName}} >
+<input type="hidden" name="tabelname" id="tabelname" value={{ tableName }}>
 <!-- Modal 2 -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -128,38 +128,54 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <script>
-    let tabelname=$('tabelname').val();
+    let tabelname = $('tabelname').val();
 
-        var table = $('#example').DataTable({
+    var table = $('#example').DataTable({
+        {#processing: true,#}
+        {#ordering: true,#}
+        {#searching: true,#}
+        {#deferRender: true,#}
+        {#scrollY: 200,#}
+        {# pageLength: 2,#}
+        scrollCollapse: true,
+        scroller: true,
+        {#"order": [],#}
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+        "ajax": {
             "processing": true,
-        "serverSide": true,
-            "ajax": {
-                "url": "tabel_api/{{tableName}}",
-                "type": "GET",
-                "dataSrc":"",
-                data:{'tableName':tabelname}
-            },
-            "columns": [
+            "url": "tabel_api/{{tableName}}",
+            "type": "GET",
+            "dataSrc": "",
+
+            data: {'tableName': tabelname}
+        },
+        "columns": [
             {
                 "data": null,
                 "defaultContent": '<button type="button" class="btn btn-primary use-address2 editbuttton" data-toggle="modal" data-target="#myModal">Edit</button>'
             },
-                {"data": "ReferenceID"},
-                {"data": "Marketplace"},
-                {"data": "Customer_id"},
-                {"data": "Review_id"},
-                {"data": "Product_id"},
-                {"data": "Product_parent"},
-                {"data": "Product_title"},
+            {"data": "ReferenceID"},
+            {"data": "Marketplace"},
+            {"data": "Customer_id"},
+            {"data": "Review_id"},
+            {"data": "Product_id"},
+            {"data": "Product_parent"},
+            {"data": "Product_title"},
 
-            ],
-            select: true,
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        });
-        $(document).ready(function () {      
-            table
+        ],
+        {#select: true,#}
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+    $(document).ready(function () {
+        table
     });
 </script>
 <script>
@@ -220,7 +236,7 @@
                     updateTabel(data.file_data);
                 }
                 $('#myModal').modal('hide');
-                $('#example').DataTable().ajax.reload();//refresh api/json 
+                $('#example').DataTable().ajax.reload();//refresh api/json
 
             },
             error: function (data, error) {
