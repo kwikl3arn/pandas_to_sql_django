@@ -10,104 +10,106 @@
 
 </head>
 <body>
-<table id="example" class="display nowrap" style="width:100%">
-    <thead>
-    <tr>
-        <th>action</th>
-        <th>ReferenceID</th>
-        <th>marketplace</th>
-        <th>customer id</th>
-        <th>review id</th>
-        <th>product id</th>
-        <th>product_parent</th>
-        <th>product title</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- {% for list in file_data %}
-        <tr id="refid-{{ list.1 }}">
-            <td>
-                <button type="button" class="btn btn-primary use-address2 editbuttton" data-id="9"
-                        data-toggle="modal" data-target="#myModal">Edit
-                </button>
-            </td>
-            <td class="ReferenceID userData" name="Referenceidname">{{ list.1 }}</td>
-            <td class="Marketplace userData" name="marketplacename">{{ list.2 }}</td>
-            <td class="Customer_id userData" name="customeridname">{{ list.3 }}</td>
-            <td class="Review_id userData" name="reviewidname">{{ list.4 }}</td>
-            <td class="Product_id userData" name="productidname">{{ list.5 }}</td>
-            <td class="Product_parent userData" name="productparentname">{{ list.6 }}</td>
-            <td class="Product_title userData" name="producttitlename">{{ list.7 }}</td>
-        </tr>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-lg-9">Sample Data</div>
+            <div class="col-lg-3">
+                <select name="column_name" id="column_name" class="form-control selectpicker" multiple>
+                    <option value="1">Reference ID</option>
+                    <option value="2">Marketplace</option>
+                    <option value="3">Customer ID</option>
+                    <option value="4">Review ID</option>
+                    <option value="5">Product ID</option>
+                    <option value="6">Product Parent</option>
+                    <option value="7">Product Title</option>
 
-    {% endfor %} -->
-    </tbody>
-</table>
-<input type="hidden" name="tabelname" id="tabelname" value={{ tableName }}>
-<!-- Modal 2 -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        Modal content
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <input type="hidden" name="tabelname" id="tabelname" value="{{ tableName }}">
-                    <label class="col-xs-3 control-label">Reference</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="examDate1" class="form-control"
-                               id="Referenceid" readonly/>
-                    </div>
-                    <label class="col-xs-3 control-label">Marketplace</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="marketplace_id" class="form-control"
-                               id="marketplace_id">
-                    </div>
-                    <label class="col-xs-3 control-label">Customer</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="customer_id" class="form-control"
-                               id="customer_id">
-                    </div>
-                    <label class="col-xs-3 control-label">Review</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="review_id" class="form-control"
-                               id="review_id">
-                    </div>
-                    <label class="col-xs-3 control-label">Product id</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="product_id" class="form-control"
-                               id="product_id">
-                    </div>
-                    <label class="col-xs-3 control-label">Product Parent</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="product_parent_id" class="form-control"
-                               id="product_parent_id">
-                    </div>
-                    <label class="col-xs-3 control-label">Product Title</label>
-                    <div class="col-xs-5 ">
-                        <input type='text' name="product_title_id" class="form-control"
-                               id="product_title_id">
-                    </div>
-                </div>
-
-                <div align="center">
-                    <button type="submit" class="btn btn-primary updatemodul"
-                    >Update
-                    </button>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal" id="modalReset">Close
-                </button>
+                </select>
             </div>
         </div>
     </div>
-</div>
+    <table id="example" class="display nowrap" style="width:100%">
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Reference ID</th>
+            <th>Marketplace</th>
+            <th>Customer ID</th>
+            <th>Review ID</th>
+            <th>Product ID</th>
+            <th>Product Parent</th>
+            <th>Product Title</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <input type="hidden" name="tabelname" id="tabelname" value={{ tableName }}>
+    <!-- Modal 2 -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="tabelname" id="tabelname" value="{{ tableName }}">
+                        <label class="col-xs-3 control-label">Reference ID</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="examDate1" class="form-control"
+                                   id="Referenceid" readonly/>
+                        </div>
+                        <label class="col-xs-3 control-label">Marketplace</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="marketplace_id" class="form-control"
+                                   id="marketplace_id">
+                        </div>
+                        <label class="col-xs-3 control-label">Customer ID</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="customer_id" class="form-control"
+                                   id="customer_id">
+                        </div>
+                        <label class="col-xs-3 control-label">Review ID</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="review_id" class="form-control"
+                                   id="review_id">
+                        </div>
+                        <label class="col-xs-3 control-label">Product ID</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="product_id" class="form-control"
+                                   id="product_id">
+                        </div>
+                        <label class="col-xs-3 control-label">Product Parent</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="product_parent_id" class="form-control"
+                                   id="product_parent_id">
+                        </div>
+                        <label class="col-xs-3 control-label">Product Title</label>
+                        <div class="col-xs-5 ">
+                            <input type='text' name="product_title_id" class="form-control"
+                                   id="product_title_id">
+                        </div>
+                    </div>
+
+                    <div align="center">
+                        <button type="submit" class="btn btn-primary updatemodul"
+                        >Update
+                        </button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal" id="modalReset">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -127,6 +129,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script>
     let tabelname = $('tabelname').val();
 
@@ -141,18 +145,17 @@
         scroller: true,
         {#"order": [],#}
         dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ],
+        {#buttons: [#}
+        {#    'copyHtml5',#}
+        {#    'excelHtml5',#}
+        {#    'csvHtml5',#}
+        {#    'pdfHtml5'#}
+        {#],#}
         "ajax": {
             "processing": true,
             "url": "tabel_api/{{tableName}}",
             "type": "GET",
             "dataSrc": "",
-
             data: {'tableName': tabelname}
         },
         "columns": [
@@ -169,13 +172,41 @@
             {"data": "Product_title"},
 
         ],
-        {#select: true,#}
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            {
+                extend: 'collection',
+                text: 'Export',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    'pdf',
+                    'print'
+                ]
+            }
         ]
     });
     $(document).ready(function () {
-        table
+        // loading data table
+        table;
+        // removing column names in table by using filter
+        $('#column_name').selectpicker();
+
+        $('#column_name').change(function () {
+
+            var all_column = ["1", "2", "3", "4", "5", '6', '7'];
+
+            var remove_column = $('#column_name').val();
+
+            var remaining_column = all_column.filter(function (obj) {
+                return remove_column.indexOf(obj) == -1;
+            });
+
+            table.columns(remove_column).visible(false);
+
+            table.columns(remaining_column).visible(true);
+
+        });
     });
 </script>
 <script>
